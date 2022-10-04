@@ -3,7 +3,7 @@
 This project is tool created for an interview with Enveritas that allows users to Create and Edit custom Surveys.
 
 ## Getting Started
-- Runs on broswers, ios, and android
+- Runs on broswers and ios sim (have not tried Android for this project, but should work there too)
 - Versions: Flutter 3.3.0 and Dart 2.18.0
   - https://docs.flutter.dev/get-started/install
 - "flutter run" from root of App
