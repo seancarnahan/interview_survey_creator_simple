@@ -9,7 +9,7 @@ class PreviewView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (surveyProvider.survey!.questions.isEmpty) {
+    if (surveyProvider.survey.questions.isEmpty) {
       return const SurveyNoQuestions();
     }
     return Column(
@@ -18,11 +18,11 @@ class PreviewView extends StatelessWidget {
         ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true, // Listview's height will based on Children's height rather than height of its parent
-          itemCount: surveyProvider.survey!.questions.length,
+          itemCount: surveyProvider.survey.questions.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 24),
-              child: surveyProvider.survey!.questions[index].getPreview(),
+              child: surveyProvider.survey.questions[index].getPreview(),
             );
           }
         ),

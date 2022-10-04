@@ -12,7 +12,7 @@ import 'package:interview_survey_creator_simple/models/SurveyQuestionable.dart';
  * Both SurveyQuestionsEditPage and SurveyQuestionCreatorPage are below the declaration of this provider in widget tree
  */
 class SurveyProvider extends ChangeNotifier {
-  Survey? survey; // TODO remove optional
+  Survey survey = Survey(name: '', questions: []);
   bool isCreatingQuestion = false;
 
   static final SurveyProvider _surveyProvider = SurveyProvider._internal();
@@ -23,63 +23,33 @@ class SurveyProvider extends ChangeNotifier {
     return _surveyProvider;
   }
 
-  void setSurvey(Survey survey) {
-    this.survey = survey;
-    notifyListeners();
-  }
-
-  Survey? getSurvey() {
-    return survey;
-  }
-
   void updateIsCreatingQuestion(bool isCreating) {
     isCreatingQuestion = isCreating;
     notifyListeners();
   }
 
-  void updateSurveyName(String newSurveyName) {
-    if (survey != null) {
-      survey!.name = newSurveyName;
-      notifyListeners();
-    }
-  }
-
-  void updateSurveyLanguages(List<String> languages) {
-
-    if (survey != null) {
-      survey!.languages = languages;
-      notifyListeners();
-    }
-  }
-
   void addQuestion(SurveyQuestionable question) {
-    if (survey != null) {
-      survey!.questions.add(question);
-      updateIsCreatingQuestion(false);
-    }
+    survey.questions.add(question);
+    updateIsCreatingQuestion(false);
   }
 
   void removeQuestionByRank(int rank) {
-    if (survey != null) {
-      survey!.questions.removeWhere((question) => question.rank == rank);
-    }
+    survey.questions.removeWhere((question) => question.rank == rank);
     _assignRanks();
     notifyListeners();
   }
 
   void reorderQuestions(int oldQuestionIndex, int newQuestionIndex) {
-    if (survey != null) {
-      List<SurveyQuestionable> questions = survey!.questions;
-      final SurveyQuestionable question = questions.removeAt(oldQuestionIndex);
-      questions.insert(newQuestionIndex, question);
-      _assignRanks();
-      notifyListeners();
-    }
+    List<SurveyQuestionable> questions = survey.questions;
+    final SurveyQuestionable question = questions.removeAt(oldQuestionIndex);
+    questions.insert(newQuestionIndex, question);
+    _assignRanks();
+    notifyListeners();
   }
 
   void _assignRanks() {
-    for (int i = 0; i < survey!.questions.length; i++) {
-      survey!.questions[i].rank = i + 1;
+    for (int i = 0; i < survey.questions.length; i++) {
+      survey.questions[i].rank = i + 1;
     }
   }
 }

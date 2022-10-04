@@ -18,7 +18,7 @@ class EditView extends StatelessWidget {
         const SizedBox(height: 32),
         CollapsedQuestionBuilder(surveyProvider: surveyProvider),
         Visibility(
-          visible: surveyProvider.survey!.questions.isNotEmpty,
+          visible: surveyProvider.survey.questions.isNotEmpty,
           child: const SizedBox(height: 24),
         ),
         if (surveyProvider.isCreatingQuestion) SurveyQuestionCreator(surveyProvider: surveyProvider)

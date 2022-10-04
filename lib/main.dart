@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'interview_survey_creator',
+      title: 'interview_survey_creator_simple',
       theme: ThemeData(
         primaryColor: BrandedColors.primary500,
         canvasColor: BrandedColors.white500,

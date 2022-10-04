@@ -44,7 +44,7 @@ class QuestionCreatorProvider extends ChangeNotifier {
   }
 
   int _getRank() {
-    int? numQuestions = SurveyProvider().getSurvey()?.questions.length ?? 0;
+    int numQuestions = SurveyProvider().survey.questions.length;
     return numQuestions + 1;
   }
 }
