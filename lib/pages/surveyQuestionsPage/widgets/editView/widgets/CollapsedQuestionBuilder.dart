@@ -12,7 +12,7 @@ class CollapsedQuestionBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<SurveyQuestionable> questions = surveyProvider.survey.questions;
+    final List<SurveyQuestionable> questions = surveyProvider.bufferSurvey.questions;
     return ReorderableListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,

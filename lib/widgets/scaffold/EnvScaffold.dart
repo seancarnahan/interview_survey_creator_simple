@@ -34,8 +34,6 @@ class EnvScaffold extends StatelessWidget {
               Visibility(
                 visible: topRightAction != null,
                 child: SizedBox(
-                  height: 32,
-                  width: 32,
                   child: Row(
                     children: [
                       topRightAction ?? const Icon(Icons.question_mark)

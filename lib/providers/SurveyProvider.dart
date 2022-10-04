@@ -12,7 +12,8 @@ import 'package:interview_survey_creator_simple/models/SurveyQuestionable.dart';
  * Both SurveyQuestionsEditPage and SurveyQuestionCreatorPage are below the declaration of this provider in widget tree
  */
 class SurveyProvider extends ChangeNotifier {
-  Survey survey = Survey(name: '', questions: []);
+  Survey survey = Survey(questions: []);
+  Survey bufferSurvey = Survey(questions: []);
   bool isCreatingQuestion = false;
   bool isEditing = false;
 
@@ -29,33 +30,51 @@ class SurveyProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updateIsEditing(bool isEditingNew) {
-    isEditing = isEditingNew;
+  void updateIsEditing(bool isEdit, [bool saveChanges=false]) {
+    if (isEdit) {
+      _resetBuffer();
+    }
+    if (saveChanges) {
+      _saveBufferIntoSurvey();
+    }
+    _resetBuffer();
+    _assignRanks();
+    isEditing = isEdit;
     notifyListeners();
   }
 
   void addQuestion(SurveyQuestionable question) {
-    survey.questions.add(question);
+    bufferSurvey.questions.add(question);
     updateIsCreatingQuestion(false);
   }
 
   void removeQuestionByRank(int rank) {
-    survey.questions.removeWhere((question) => question.rank == rank);
+    bufferSurvey.questions.removeWhere((question) => question.rank == rank);
     _assignRanks();
     notifyListeners();
   }
 
   void reorderQuestions(int oldQuestionIndex, int newQuestionIndex) {
-    List<SurveyQuestionable> questions = survey.questions;
+    List<SurveyQuestionable> questions = bufferSurvey.questions;
     final SurveyQuestionable question = questions.removeAt(oldQuestionIndex);
     questions.insert(newQuestionIndex, question);
     _assignRanks();
     notifyListeners();
   }
 
+  void _resetBuffer() {
+    bufferSurvey.questions = [];
+    bufferSurvey.questions.addAll(survey.questions);
+  }
+
+  void _saveBufferIntoSurvey() {
+    survey.questions = [];
+    survey.questions.addAll(bufferSurvey.questions);
+  }
+
   void _assignRanks() {
-    for (int i = 0; i < survey.questions.length; i++) {
-      survey.questions[i].rank = i + 1;
+    for (int i = 0; i < bufferSurvey.questions.length; i++) {
+      bufferSurvey.questions[i].rank = i + 1;
     }
   }
 }
