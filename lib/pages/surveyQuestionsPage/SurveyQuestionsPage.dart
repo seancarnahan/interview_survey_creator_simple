@@ -18,31 +18,23 @@ class SurveyQuestionsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider.value(
       value: SurveyProvider(),
-      child: EnvScaffold(
-        topRightAction: EnvGestureDetector(
-          child: const Icon(
-            Icons.ios_share,
-            size: 32,
-            color: BrandedColors.primary500
-          ),
-          onTap: () {
-            // TODO change icon and action to
-          },
-        ),
-        pageContent: Consumer<SurveyProvider>(
-          builder: (context, surveyProvider, child) {
-            return Column(
-              children: [
-                const SizedBox(height: 32),
-
-                // TODO
-                // PreviewView(surveyProvider: surveyProvider)
-                // EditView(surveyProvider: surveyProvider)
-              ],
-            );
-          }
-        )
-      ),
+      child: Consumer<SurveyProvider>(
+        builder: (context, surveyProvider, child) {
+          return EnvScaffold(
+            topRightAction: EnvGestureDetector(
+              child: Icon(
+                surveyProvider.isEditing ? Icons.check : Icons.mode_edit,
+                size: 32,
+                color: BrandedColors.primary500
+              ),
+              onTap: () {
+                surveyProvider.updateIsEditing(!surveyProvider.isEditing);
+              },
+            ),
+            pageContent: surveyProvider.isEditing ? EditView(surveyProvider: surveyProvider) : PreviewView(surveyProvider: surveyProvider)
+          );
+        }
+      )
     );
   }
 }

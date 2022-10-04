@@ -14,6 +14,7 @@ import 'package:interview_survey_creator_simple/models/SurveyQuestionable.dart';
 class SurveyProvider extends ChangeNotifier {
   Survey survey = Survey(name: '', questions: []);
   bool isCreatingQuestion = false;
+  bool isEditing = false;
 
   static final SurveyProvider _surveyProvider = SurveyProvider._internal();
 
@@ -25,6 +26,11 @@ class SurveyProvider extends ChangeNotifier {
 
   void updateIsCreatingQuestion(bool isCreating) {
     isCreatingQuestion = isCreating;
+    notifyListeners();
+  }
+
+  void updateIsEditing(bool isEditingNew) {
+    isEditing = isEditingNew;
     notifyListeners();
   }
 
