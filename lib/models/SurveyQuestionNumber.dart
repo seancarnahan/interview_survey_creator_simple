@@ -15,7 +15,7 @@ class SurveyQuestionNumber implements SurveyQuestionable {
   @override
   int rank;
 
-  final SurveyQuestionType type = SurveyQuestionType.MultipleChoice;
+  final SurveyQuestionType type = SurveyQuestionType.Number;
 
   SurveyQuestionNumber(this.title, this.rank);
 

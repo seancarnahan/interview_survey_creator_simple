@@ -1,5 +1,4 @@
 // ignore_for_file: constant_identifier_names
-
 import 'package:flutter/material.dart';
 import 'package:interview_survey_creator_simple/models/Survey.dart';
 import 'package:interview_survey_creator_simple/models/SurveyQuestionable.dart';
@@ -9,7 +8,6 @@ import 'package:interview_survey_creator_simple/models/SurveyQuestionable.dart';
  * This Service is used for once a survey is selected, then we can run certain functions on it
  * Using Singleton to avoid routing params and so I can access provider w/out consuming it
  * Otherwise accessing the Provider would have to have your widget also consume and be updated by it
- * Both SurveyQuestionsEditPage and SurveyQuestionCreatorPage are below the declaration of this provider in widget tree
  */
 class SurveyProvider extends ChangeNotifier {
   Survey survey = Survey(questions: []);
@@ -31,14 +29,13 @@ class SurveyProvider extends ChangeNotifier {
   }
 
   void updateIsEditing(bool isEdit, [bool saveChanges=false]) {
-    if (isEdit) {
-      _resetBuffer();
-    }
+    isCreatingQuestion = false;
+    _assignRanks();
     if (saveChanges) {
       _saveBufferIntoSurvey();
     }
     _resetBuffer();
-    _assignRanks();
+    _assignRanks(); // TODO: remove once deep copy is fixed
     isEditing = isEdit;
     notifyListeners();
   }
@@ -62,11 +59,15 @@ class SurveyProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // TODO: Fix deep copy issue here -> questions object reference is being copied over
+  // JsonDecode(JSONEncode()) no longer works
   void _resetBuffer() {
     bufferSurvey.questions = [];
     bufferSurvey.questions.addAll(survey.questions);
   }
 
+  // TODO: Fix deep copy issue here -> questions object reference is being copied over
+  // JsonDecode(JSONEncode()) no longer works
   void _saveBufferIntoSurvey() {
     survey.questions = [];
     survey.questions.addAll(bufferSurvey.questions);

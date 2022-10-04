@@ -13,7 +13,7 @@ class SurveyQuestionText implements SurveyQuestionable {
   @override
   int rank;
 
-  final SurveyQuestionType type = SurveyQuestionType.MultipleChoice;
+  final SurveyQuestionType type = SurveyQuestionType.Text;
 
   SurveyQuestionText(this.title, this.rank);
 
