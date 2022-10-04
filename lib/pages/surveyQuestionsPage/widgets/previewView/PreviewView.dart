@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:interview_survey_creator_simple/providers/SurveyProvider.dart';
+import 'package:interview_survey_creator_simple/styles/BrandedColors.dart';
+import 'package:interview_survey_creator_simple/styles/BrandedTextStyle.dart';
 
 import 'widgets/SurveyNoQuestions.dart';
 
@@ -14,7 +16,8 @@ class PreviewView extends StatelessWidget {
     }
     return Column(
       children: [
-        const SizedBox(height: 32),
+        Text('Preview', style: BrandedTextStyle.b1Reg(BrandedColors.primary500)),
+        const SizedBox(height: 24),
         ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true, // Listview's height will based on Children's height rather than height of its parent

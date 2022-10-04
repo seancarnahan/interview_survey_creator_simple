@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:interview_survey_creator_simple/constants/DesktopContstraints.dart';
 import 'package:interview_survey_creator_simple/providers/SurveyProvider.dart';
 import 'package:interview_survey_creator_simple/widgets/button/EnvGestureDetector.dart';
 import 'package:interview_survey_creator_simple/widgets/scaffold/EnvScaffold.dart';
@@ -16,6 +17,7 @@ class SurveyQuestionsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isMobile =  MediaQuery.of(context).size.width < MobileBreakpoint;
     return ChangeNotifierProvider.value(
       value: SurveyProvider(),
       child: Consumer<SurveyProvider>(
@@ -24,14 +26,21 @@ class SurveyQuestionsPage extends StatelessWidget {
             topRightAction: EnvGestureDetector(
               child: Icon(
                 surveyProvider.isEditing ? Icons.check : Icons.mode_edit,
-                size: 32,
+                size: isMobile ? 32 : 24,
                 color: BrandedColors.primary500
               ),
               onTap: () {
                 surveyProvider.updateIsEditing(!surveyProvider.isEditing);
               },
             ),
-            pageContent: surveyProvider.isEditing ? EditView(surveyProvider: surveyProvider) : PreviewView(surveyProvider: surveyProvider)
+            pageContent: Column(
+              children: [
+                if (surveyProvider.isEditing)
+                  EditView(surveyProvider: surveyProvider)
+                else
+                  PreviewView(surveyProvider: surveyProvider)
+              ],
+            )
           );
         }
       )

@@ -15,7 +15,6 @@ class EditView extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const SizedBox(height: 32),
         CollapsedQuestionBuilder(surveyProvider: surveyProvider),
         Visibility(
           visible: surveyProvider.survey.questions.isNotEmpty,
